@@ -46,7 +46,7 @@ public class Quadrado {
     //-1 codigo de erro cliccou em uma bomba!
     //0 - sem bombas em seus vizinhos
     //n - quantidade de bomas
-    public int clicar() {
+    public int revelar() {
         if (this.possui_mina) {
             return -1;
         }
