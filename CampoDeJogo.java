@@ -16,14 +16,17 @@ public class CampoDeJogo {
     private Integer linhas = 0;
     private Integer colunas = 0;
     private Integer minas = 0;
-    
-    
-    public Integer getLinhas(){
+
+    public Integer getLinhas() {
         return this.linhas;
     }
 
-    public Integer getColunas(){
+    public Integer getColunas() {
         return this.colunas;
+    }
+    
+   public Quadrado getQuadrado(int lin, int col){
+            return matriz[lin][col];
     }
 
     public CampoDeJogo(int nivel) {
@@ -108,13 +111,27 @@ public class CampoDeJogo {
         }
     }
 
-    
-    
-    public int clicar(int linha, int coluna){
+    public boolean finalizado() {
+
+        for (int i = 0; i < this.linhas; i++) {
+            for (int j = 0; j < this.colunas; j++) {
+                if (this.matriz[i][j].isFinalizado()) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public int revelar(int linha, int coluna) {
         return this.matriz[linha][coluna].revelar();
     }
     
     
+   
+
     @Override
     public String toString() {
         String str = "";

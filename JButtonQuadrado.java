@@ -11,29 +11,61 @@ import javax.swing.JButton;
  * @author User
  */
 public class JButtonQuadrado extends JButton {
-    
+
     private int linha;
     private int coluna;
-    CampoDeJogo campo;
-    
-    
-        public JButtonQuadrado(CampoDeJogo c){
-            this.campo = c;
-            this.addActionListener((java.awt.event.ActionEvent evt)->{
-                acaoBotao(evt);
-            });
-        }
-    
-    private void acaoBotao(java.awt.event.ActionEvent evt){
-        //System.out.println("POSIÇÃO: " + this.linha + "x" + this.coluna);
-    int valor = campo.clicar(this.linha, this.coluna);
-    this.setText(Integer.toString(valor));
-        //System.out.println("POSIÇÃO: " + this.linha + "x" + this.coluna);
+    private Quadrado quadrado;
+    private Tela tela;
+
+    public Quadrado getQuadrado() {
+        return quadrado;
     }
-    
-    public void setPos(int linha, int coluna){
+
+    public JButtonQuadrado(Quadrado quadrado, Tela tela) {
+        this.tela = tela;
+        this.quadrado = quadrado;
+        this.addActionListener((java.awt.event.ActionEvent evt) -> {
+            acaoBotao(evt);
+        });
+    }
+
+    private void acaoBotao(java.awt.event.ActionEvent evt) {
+        //se for minado
+
+        //se não for minado
+        this.clicar();
+
+    }
+
+    public void clicar() {
+        int vizinhosMinados = this.quadrado.revelar();
+        if (vizinhosMinados == -1) {
+            this.tela.revelarMinas();
+            return;
+        }
+        if (vizinhosMinados == 0) {
+            for (Quadrado vizinho : quadrado.getVizinhos()) {
+                revelar(Integer.toString(vizinhosMinados));
+                if (!vizinho.isClicado()) {
+                    vizinho.getBotaoFisico().clicar();
+                }
+
+            };
+        }
+        revelar(Integer.toString(vizinhosMinados));
+
+    }
+
+    public void setPos(int linha, int coluna) {
         this.linha = linha;
         this.coluna = coluna;
     }
-    
+
+    public void revelar(String n) {
+
+        this.setText(n);
+        this.setEnabled(false);
+        quadrado.clicar();
+    }
+
 }

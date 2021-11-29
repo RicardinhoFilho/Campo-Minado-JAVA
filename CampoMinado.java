@@ -17,8 +17,9 @@ public class CampoMinado {
      CampoDeJogo c = new CampoDeJogo(0);
      System.out.println(c);
      
-      Tela t = new Tela(c.getLinhas(), c.getColunas(),c);
+      Tela t = new Tela(c);
      
     }
+    
     
 }

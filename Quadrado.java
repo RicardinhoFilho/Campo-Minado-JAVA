@@ -18,6 +18,12 @@ public class Quadrado {
     private boolean clicado;
 
     private ArrayList<Quadrado> vizinhos;
+    
+    private JButtonQuadrado button;//Relacao do botão dele fisico
+    
+    public JButtonQuadrado getBotaoFisico(){
+        return this.button;
+    }
 
     public Quadrado() {
         this.possui_mina = false;
@@ -28,6 +34,17 @@ public class Quadrado {
 
     }
 
+    public boolean isClicado(){
+        return this.clicado;
+    }
+    
+    public void clicar (){
+       this.clicado = true;
+    }
+    
+    public boolean isMarcado(){
+        return this.marcado;
+    }
     public boolean plantar_mina() {
         //Solcuionando problema de sortear duas vezes a mesma posição para a mina!
         if (this.possui_mina) {
@@ -53,7 +70,11 @@ public class Quadrado {
         return this.getNumeroDeminasVizinhas();
 
     }
-
+    
+    public ArrayList<Quadrado> getVizinhos(){
+        return this.vizinhos;
+    }
+    
     public void adicionar_vizinho(Quadrado novoVizinho) {
         this.vizinhos.add(novoVizinho);
 
@@ -78,6 +99,17 @@ public class Quadrado {
         this.revelado = false;
         this.marcado = false;
         this.clicado = false;
+    }
+    
+    
+    public boolean isFinalizado(){
+        if(this.possui_mina && this.marcado) return true;
+       // if(!this.possui_mina && !this.marcado) return true;
+        return false;
+    }
+    
+    public void setButton(JButtonQuadrado button){
+        this.button = button;
     }
     
     @Override
