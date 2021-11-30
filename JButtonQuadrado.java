@@ -4,7 +4,9 @@
  */
 package CampoMinado;
 
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -25,22 +27,52 @@ public class JButtonQuadrado extends JButton {
         this.tela = tela;
         this.quadrado = quadrado;
         this.addActionListener((java.awt.event.ActionEvent evt) -> {
-            acaoBotao(evt);
+            acaoBotao(false);
         });
+
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    acaoBotao(true);
+                }
+            }
+        });
+
     }
 
-    private void acaoBotao(java.awt.event.ActionEvent evt) {
-        //se for minado
+    private void acaoBotao(boolean mouseBotaoDireito) {
+       
+        if (!mouseBotaoDireito) {
+            clicar();
+        } else {
+            marcar();
+        }
+        this.tela.checkIsFinalizado();
+    }
 
-        //se não for minado
-        this.clicar();
-
+    public void marcar() {
+        
+        if (this.quadrado.isClicado()) {
+            return;
+        }
+        boolean isMarcado = this.quadrado.marcar_desmarcar();
+        if (isMarcado) {
+            this.setText("M");
+        } else {
+            this.setText("");
+        }
     }
 
     public void clicar() {
+        if (this.quadrado.isMarcado()) {
+            return;
+        }
+
         int vizinhosMinados = this.quadrado.revelar();
         if (vizinhosMinados == -1) {
             this.tela.revelarMinas();
+            this.tela.desativarBotoes();
+            System.out.println("Perdeu");
             return;
         }
         if (vizinhosMinados == 0) {
@@ -68,4 +100,6 @@ public class JButtonQuadrado extends JButton {
         quadrado.clicar();
     }
 
+   
+    
 }

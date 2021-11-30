@@ -25,14 +25,16 @@ public class CampoDeJogo {
         return this.colunas;
     }
     
-   public Quadrado getQuadrado(int lin, int col){
-            return matriz[lin][col];
+      public Integer getMinas() {
+        return this.minas;
     }
 
-    public CampoDeJogo(int nivel) {
 
-        System.out.println("Nivel: " + nivel);
-
+    public Quadrado getQuadrado(int lin, int col) {
+        return matriz[lin][col];
+    }
+    
+    public void criaJogo(int nivel){
         if (nivel == 0) {
             this.linhas = 9;
 
@@ -94,6 +96,14 @@ public class CampoDeJogo {
         this.adicionar_minas();
     }
 
+    public CampoDeJogo(int nivel) {
+
+        System.out.println("Nivel: " + nivel);
+        criaJogo(nivel);
+
+        
+    }
+
     public void adicionar_minas() {
         int n = this.minas;
         Random rand = new Random();
@@ -111,11 +121,28 @@ public class CampoDeJogo {
         }
     }
 
-    public boolean finalizado() {
-
+    public boolean ganhou() {
+        boolean finalizou = false;
         for (int i = 0; i < this.linhas; i++) {
             for (int j = 0; j < this.colunas; j++) {
                 if (this.matriz[i][j].isFinalizado()) {
+                    finalizou = true;
+                } else {
+
+                    return false;
+                }
+            }
+
+        }
+
+        return finalizou;
+    }
+
+    public boolean perdeu() {
+      
+        for (int i = 0; i < this.linhas; i++) {
+            for (int j = 0; j < this.colunas; j++) {
+                if (this.matriz[i][j].isPerdido()) {
                     return true;
                 }
             }
@@ -128,10 +155,9 @@ public class CampoDeJogo {
     public int revelar(int linha, int coluna) {
         return this.matriz[linha][coluna].revelar();
     }
-    
-    
-   
 
+      
+    
     @Override
     public String toString() {
         String str = "";

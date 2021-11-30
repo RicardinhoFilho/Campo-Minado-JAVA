@@ -14,11 +14,13 @@ public class CampoMinado {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     CampoDeJogo c = new CampoDeJogo(0);
-     System.out.println(c);
+    
      
-      Tela t = new Tela(c);
+      Tela t = new Tela(0);
      
+    }
+    public static void hardReset(int nivel){
+        Tela t = new Tela(nivel);
     }
     
     

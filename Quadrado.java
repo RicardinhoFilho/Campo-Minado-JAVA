@@ -101,11 +101,18 @@ public class Quadrado {
         this.clicado = false;
     }
     
-    
-    public boolean isFinalizado(){
-        if(this.possui_mina && this.marcado) return true;
+    public boolean isPerdido(){
+          if(this.possui_mina && this.marcado) return true;
+        
        // if(!this.possui_mina && !this.marcado) return true;
         return false;
+    }
+    
+    public boolean isFinalizado(){
+        if(this.possui_mina && !this.marcado) return false;
+        
+       // if(!this.possui_mina && !this.marcado) return true;
+        return true;
     }
     
     public void setButton(JButtonQuadrado button){
