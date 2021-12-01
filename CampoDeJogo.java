@@ -16,6 +16,7 @@ public class CampoDeJogo {
     private Integer linhas = 0;
     private Integer colunas = 0;
     private Integer minas = 0;
+    private Integer bandeiras = 0;
 
     public Integer getLinhas() {
         return this.linhas;
@@ -28,6 +29,26 @@ public class CampoDeJogo {
       public Integer getMinas() {
         return this.minas;
     }
+      
+      public int getBandeiras(){
+          return this.bandeiras;
+      }
+      
+       public int inserirBandeira(){
+           if(this.bandeiras  <=0){
+               return -1;
+           }
+          this.bandeiras --;
+          return this.bandeiras;
+      }
+       
+          public int retirarBandeira(){
+           if(this.bandeiras  >= this.minas){
+               return -1;
+           }
+          this.bandeiras ++;
+          return this.bandeiras;
+      }
 
 
     public Quadrado getQuadrado(int lin, int col) {
@@ -41,14 +62,17 @@ public class CampoDeJogo {
             this.colunas = 9;
 
             this.minas = 10;
+            this.bandeiras = 10;
         } else if (nivel == 1) {
             this.linhas = 16;
             this.colunas = 16;
             this.minas = 40;
+             this.bandeiras = 40;
         } else if (nivel == 2) {
             this.linhas = 30;
             this.colunas = 16;
             this.minas = 99;
+              this.bandeiras = 99;
         }
 
         this.matriz = new Quadrado[linhas][colunas];

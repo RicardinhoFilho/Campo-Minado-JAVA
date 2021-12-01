@@ -7,6 +7,7 @@ package CampoMinado;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
+import java.awt.Color;
 
 /**
  *
@@ -41,8 +42,9 @@ public class JButtonQuadrado extends JButton {
     }
 
     private void acaoBotao(boolean mouseBotaoDireito) {
-       
+
         if (!mouseBotaoDireito) {
+
             clicar();
         } else {
             marcar();
@@ -51,15 +53,22 @@ public class JButtonQuadrado extends JButton {
     }
 
     public void marcar() {
-        
+
         if (this.quadrado.isClicado()) {
             return;
         }
         boolean isMarcado = this.quadrado.marcar_desmarcar();
         if (isMarcado) {
-            this.setText("M");
+            if (this.tela.marcarBandeira() != -1) {
+
+                this.setText("M");
+            }
+
         } else {
-            this.setText("");
+            if (this.tela.desmarcarBandeira() != -1) {
+                this.setText("");
+            }
+
         }
     }
 
@@ -72,19 +81,19 @@ public class JButtonQuadrado extends JButton {
         if (vizinhosMinados == -1) {
             this.tela.revelarMinas();
             this.tela.desativarBotoes();
-            System.out.println("Perdeu");
+            this.tela.perdeu();
             return;
         }
         if (vizinhosMinados == 0) {
             for (Quadrado vizinho : quadrado.getVizinhos()) {
-                revelar(Integer.toString(vizinhosMinados));
+                revelar(vizinhosMinados);
                 if (!vizinho.isClicado()) {
                     vizinho.getBotaoFisico().clicar();
                 }
 
             };
         }
-        revelar(Integer.toString(vizinhosMinados));
+        revelar(vizinhosMinados);
 
     }
 
@@ -93,13 +102,32 @@ public class JButtonQuadrado extends JButton {
         this.coluna = coluna;
     }
 
-    public void revelar(String n) {
-
-        this.setText(n);
+    public void revelar(int n) {
+       //System.out.println("N = "+ n);
+        if(n==1){
+            this.setBackground(new Color(3, 59, 90).brighter());
+        }
+        
+         if(n==2){
+            this.setBackground(Color.GREEN.brighter());
+        }
+         
+          if(n==3){
+            this.setBackground(Color.ORANGE.brighter());
+        }
+          
+          if(n==4){
+            this.setBackground(Color.RED.brighter());
+        }
+          
+          if(n > 4){
+                this.setBackground(Color.PINK.brighter());
+          }
+            
+       
+        this.setText(Integer.toString(n));
         this.setEnabled(false);
         quadrado.clicar();
     }
 
-   
-    
 }
